@@ -1,0 +1,49 @@
+h1 {
+	width: 30%;
+	font-size: 8em;
+	text-align: center;
+	margin: 0 auto;
+	font-family: cursive;
+}
+
+.buttons {
+	display: grid;
+	grid-template: 100px 1fr 1fr 1fr 1fr 1fr 1fr / repeat(5, 1fr);
+	border: 2px solid black;
+	width: 250px;
+	height: 400px;
+	margin: 0 auto;
+	transform: translate(0, 5%);
+}
+
+.numbers {
+	grid-area: 3 / 1 / 8 / 4;
+	display: grid;
+	height: auto;
+	width: 200px;
+	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.operators {
+	grid-area: 2 / 5 / 8 / 6;
+	display: grid;
+	width: 50px;
+}
+
+.oopise {
+	grid-area: 2 / 1 / 3 / 5;
+	display: grid;
+	grid-template: 1fr / 1fr 1fr;
+}
+
+.screen {
+	grid-area: 1 / 1 / 2 / 6;
+	text-align: center;
+	font-family: monospace;
+	font-size: 3em;
+	letter-spacing: 1px;
+	transform: translate(1%, 30%);
+}
+#zero {
+	grid-area: 4 / 1 / 5 / 3;
+}
