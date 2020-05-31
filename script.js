@@ -1,7 +1,12 @@
 let screenContent = [];
+let numbers = [];
 
 const screen = document.querySelector(".screen");
+
 const clear = document.querySelector("#clear");
+clear.addEventListener("click", clearScreen);
+
+//creates buttons for all the numbers and operators
 const zero = document.querySelector("#zero");
 zero.addEventListener("click", () => addTextToScreen(0));
 const one = document.querySelector("#one");
@@ -23,37 +28,43 @@ eight.addEventListener("click", () => addTextToScreen(8));
 const nine = document.querySelector("#nine");
 nine.addEventListener("click", () => addTextToScreen(9));
 
+const add = document.querySelector("#add");
+add.addEventListener("click", () => getOperators(" + "));
+const subtract = document.querySelector("#subtract");
+subtract.addEventListener("click", () => getOperators(" - "));
+const multiply = document.querySelector("#multiply");
+multiply.addEventListener("click", () => getOperators(" * "));
+const divide = document.querySelector("#divide");
+divide.addEventListener("click", () => getOperators(" / "));
+const equals = document.querySelector("#equals");
+equals.addEventListener("click", () => operate(screenContent.join("")));
+
+//pushes inputs to the calculators screen
 function addTextToScreen(number) {
     screenContent.push(number);
     screen.textContent = screenContent.join("");
 }
 
-function operate(numberOne, numberTwo, operator) {
-    if (operator === "add") {
-        return add(numberOne, numberTwo);
-    } else if (operator === "subtract") {
-        return subtract(numberOne, numberTwo);
-    } else if (operator === "multiply") {
-        return multiply(numberOne, numberTwo);
-    } else if (operator === "divide") {
-        return divide(numberOne, numberTwo);
-    } else {
-        return 0;
-    }
+// THIS IS A TEST FOR HOW OPERATIONS WILL WORK
+// pushes digits from the screen to an array called numbers, which will hold these numbers
+// eventually, on pressing enter the numbers array will be cleared out
+function getOperators(operator) {
+    numbers.push(screenContent.join(""));
+    numbers.push(operator);
+    screenContent = [];
+    console.log(numbers);
 }
 
-function add(a, b) {
-    return a + b;
+//goes with the clear button, completely clears out the screen and  the numbers array
+function clearScreen() {
+    screen.textContent = "";
+    screenContent = [];
+    numbers = [];
+    console.log(numbers);
 }
 
-function subtract(a, b) {
-    return a - b;
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
+function operate(lastNumber) {
+    numbers.push(lastNumber);
+    console.log(numbers.join(""));
+    console.log(typeof numbers.join(""));
 }
