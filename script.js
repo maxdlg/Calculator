@@ -5,6 +5,8 @@ const screen = document.querySelector(".screen");
 
 const clear = document.querySelector("#clear");
 clear.addEventListener("click", clearScreen);
+const back = document.querySelector("#back");
+back.addEventListener("click", backspace);
 
 //creates buttons for all the numbers and operators
 const zero = document.querySelector("#zero");
@@ -39,20 +41,21 @@ divide.addEventListener("click", () => getOperators(" / "));
 const equals = document.querySelector("#equals");
 equals.addEventListener("click", () => operate(screenContent.join("")));
 
+const point = document.querySelector("#decimal");
+point.addEventListener("click", () => decimal());
+
 //pushes inputs to the calculators screen
 function addTextToScreen(number) {
     screenContent.push(number);
     screen.textContent = screenContent.join("");
 }
 
-// THIS IS A TEST FOR HOW OPERATIONS WILL WORK
-// pushes digits from the screen to an array called numbers, which will hold these numbers
-// eventually, on pressing enter the numbers array will be cleared out
+//pushes the screen content to the numbers array, and then pushes the chosen operator to the number array
+//then clears screen content so the next inputs are on a new screen
 function getOperators(operator) {
     numbers.push(screenContent.join(""));
     numbers.push(operator);
     screenContent = [];
-    console.log(numbers);
 }
 
 //goes with the clear button, completely clears out the screen and  the numbers array
@@ -60,11 +63,37 @@ function clearScreen() {
     screen.textContent = "";
     screenContent = [];
     numbers = [];
-    console.log(numbers);
 }
 
+//does what it says, pops out the last number on the screen
+function backspace() {
+    screenContent.pop();
+    screen.textContent = screenContent.join("");
+}
+
+//on pressing the "=" sign, this is called
+//pushes the number that is on the screen to the numbers array
+//to avoid using the eval function, created the evaluate, which is probably lighter than eval
+//then clears out the screen content and numbers for a fresh new calculation
 function operate(lastNumber) {
     numbers.push(lastNumber);
-    console.log(numbers.join(""));
-    console.log(typeof numbers.join(""));
+    screenContent = [];
+    screen.textContent = +evaluate(numbers.join("")).toFixed(12);
+
+    function evaluate(fn) {
+        return new Function("return " + fn)();
+    }
+
+    numbers = [];
+}
+
+function decimal() {
+    const dot = /[.]/;
+    let decTest = dot.test(screenContent.join(""));
+    if (decTest) {
+        return;
+    } else {
+        screenContent.push(".");
+        screen.textContent = screenContent.join("");
+    }
 }
