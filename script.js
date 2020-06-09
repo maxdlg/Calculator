@@ -1,6 +1,7 @@
 let screenContent = [];
 let numbers = [];
 
+let isNegative = false;
 const screen = document.querySelector(".screen");
 
 document.addEventListener("keydown", keyPush);
@@ -22,6 +23,18 @@ function getOperators(operator) {
     numbers.push(screenContent.join(""));
     numbers.push(operator);
     screenContent = [];
+}
+
+function makeNegative() {
+    if (!isNegative) {
+        screenContent.unshift("-");
+        screen.textContent = screenContent.join("");
+        isNegative = true;
+    } else {
+        screenContent.shift();
+        screen.textContent = screenContent.join("");
+        isNegative = false;
+    }
 }
 
 //goes with the clear button, completely clears out the screen and  the numbers array
@@ -68,7 +81,6 @@ function addDecimal() {
 }
 
 function checkAnswerLength(answer) {
-    console.log(answer);
     let answerArray = [...answer];
     const dot = /[.]/;
     let decTest = dot.test(answer);
@@ -164,6 +176,9 @@ function keyPush(evt) {
         case "Delete":
         case "c":
             clearScreen();
+            break;
+        case "negative":
+            makeNegative();
             break;
     }
 }
