@@ -50,11 +50,11 @@ button {
     grid-template: 1fr / repeat(4, 1fr);
 }
 
-.oopise * {
+.oopise *:hover {
     background-color: lightgray;
 }
 
-.oopise *:hover {
+.oopise * {
     background-color: gray;
 }
 
