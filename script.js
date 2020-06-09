@@ -9,7 +9,7 @@ document.addEventListener("click", keyPush);
 
 //pushes inputs to the calculators screen
 function addTextToScreen(number) {
-    if (screenContent.length > 10) {
+    if (screenContent.length > 11) {
         return;
     } else {
         screenContent.push(number);
@@ -63,7 +63,7 @@ function operate(lastNumber) {
         return new Function("return " + fn)();
     }
 
-    numbers = [unpolishedAnswer];
+    numbers = [];
     screenContent = [];
 }
 
@@ -88,11 +88,11 @@ function checkAnswerLength(answer) {
     //checks for an output greater than 11(the number of characters that can fit on the screen)
     //if more than 11 and is a decimal, just cuts off the other numbers
     //if more than 11 and is not a decimal, will give the answer in exponential notation
-    if (answerArray.length > 11 && decTest) {
-        answerArray.splice(11, answerArray.length).join("");
+    if (answerArray.length > 12 && decTest) {
+        answerArray.splice(12, answerArray.length).join("");
         screen.textContent = answerArray.join("");
-    } else if (answerArray.length > 11) {
-        screen.textContent = Number(answer).toExponential(5);
+    } else if (answerArray.length > 12) {
+        screen.textContent = Number(answer).toExponential(6);
     } else if (answer === "NaN" || answer === "Infinity") {
         screen.textContent = "lol idiot";
     } else {
