@@ -42,12 +42,16 @@ const equals = document.querySelector("#equals");
 equals.addEventListener("click", () => operate(screenContent.join("")));
 
 const point = document.querySelector("#decimal");
-point.addEventListener("click", () => decimal());
+point.addEventListener("click", () => addDecimal());
 
 //pushes inputs to the calculators screen
 function addTextToScreen(number) {
-    screenContent.push(number);
-    screen.textContent = screenContent.join("");
+    if (screenContent.length > 10) {
+        return;
+    } else {
+        screenContent.push(number);
+        screen.textContent = screenContent.join("");
+    }
 }
 
 //pushes the screen content to the numbers array, and then pushes the chosen operator to the number array
@@ -77,17 +81,18 @@ function backspace() {
 //then clears out the screen content and numbers for a fresh new calculation
 function operate(lastNumber) {
     numbers.push(lastNumber);
-    screenContent = [];
-    screen.textContent = +evaluate(numbers.join("")).toFixed(12);
+    let unpolishedAnswer = +evaluate(numbers.join("")).toFixed(12);
+    checkAnswerLength(unpolishedAnswer.toString());
 
     function evaluate(fn) {
         return new Function("return " + fn)();
     }
 
     numbers = [];
+    screenContent = [];
 }
 
-function decimal() {
+function addDecimal() {
     const dot = /[.]/;
     let decTest = dot.test(screenContent.join(""));
     if (decTest) {
@@ -95,5 +100,22 @@ function decimal() {
     } else {
         screenContent.push(".");
         screen.textContent = screenContent.join("");
+    }
+}
+
+function checkAnswerLength(thing) {
+    let arrayOfThing = [...thing];
+    const dot = /[.]/;
+    let decTest = dot.test(thing);
+
+    //if the length of the string is greater than 11 and there is a decimal, return a string that is properly rounded and is less than 11 digits long
+    if (arrayOfThing.length > 11 && decTest) {
+        arrayOfThing.splice(11, arrayOfThing.length).join("");
+        screen.textContent = arrayOfThing.join("");
+    } else if (arrayOfThing.length > 11) {
+        // exponentNotation(thing);
+        screen.textContent = Number(thing).toExponential(5);
+    } else {
+        screen.textContent = thing;
     }
 }
